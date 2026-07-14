@@ -87,6 +87,11 @@ html, body, .stApp {
     text-transform: uppercase !important;
     letter-spacing: 0.06em !important;
 }
+/* Hide min/max tick labels below slider track */
+[data-testid="stSliderTickBarMin"],
+[data-testid="stSliderTickBarMax"] {
+    display: none !important;
+}
 
 /* ── Tabs ── */
 [data-testid="stTabs"] [role="tablist"] {
