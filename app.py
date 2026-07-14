@@ -547,6 +547,11 @@ def grade_bg(g: str) -> str:
 # ═══════════════════════════════════════════════════════════════════════════════
 # Pipeline (cached)
 # ═══════════════════════════════════════════════════════════════════════════════
+
+# Absolute root of the project (same directory as app.py)
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
 @st.cache_resource(show_spinner="Initialising ML pipeline — please wait…")
 def load_pipeline():
     from data_generator import generate_dataset
@@ -554,13 +559,37 @@ def load_pipeline():
     from train_models   import train_and_evaluate
     from evaluate       import build_comparison_table
 
-    csv_path = os.path.join("data", "student_data.csv")
+    csv_path        = os.path.join(ROOT_DIR, "data", "student_data.csv")
+    model_dir       = os.path.join(ROOT_DIR, "models")
+    best_model_path = os.path.join(model_dir, "best_model.pkl")
+    all_models_path = os.path.join(model_dir, "all_models.pkl")
+    scaler_path     = os.path.join(model_dir, "scaler.pkl")
+    imputer_path    = os.path.join(model_dir, "imputer.pkl")
+
+    # ── Ensure dataset exists ─────────────────────────────────────────────────
     if not os.path.exists(csv_path):
         generate_dataset(save_path=csv_path)
 
+    # ── Preprocess (always needed for df_clean, y_test, feature_names) ────────
     X_train, X_test, y_train, y_test, feature_names, scaler, df_clean = \
-        load_and_preprocess(csv_path=csv_path)
-    results, best_name, best_model = train_and_evaluate(X_train, X_test, y_train, y_test)
+        load_and_preprocess(
+            csv_path=csv_path,
+            model_dir=model_dir,
+        )
+
+    # ── Load pre-trained models from disk (fast) — train only if missing ──────
+    if os.path.exists(all_models_path) and os.path.exists(best_model_path):
+        import joblib
+        results    = joblib.load(all_models_path)
+        best_model = joblib.load(best_model_path)
+        # Determine best model name by R²
+        best_name  = max(results, key=lambda k: results[k]["R2"])
+    else:
+        results, best_name, best_model = train_and_evaluate(
+            X_train, X_test, y_train, y_test,
+            model_dir=model_dir,
+        )
+
     comparison_df = build_comparison_table(results)
 
     return dict(X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test,

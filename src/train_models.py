@@ -13,9 +13,9 @@ from sklearn.tree            import DecisionTreeRegressor
 from sklearn.ensemble        import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics         import mean_absolute_error, mean_squared_error, r2_score
 
-MODEL_DIR      = "models"
-BEST_MODEL_PATH = os.path.join(MODEL_DIR, "best_model.pkl")
-ALL_MODELS_PATH = os.path.join(MODEL_DIR, "all_models.pkl")
+DEFAULT_MODEL_DIR = "models"
+BEST_MODEL_PATH = os.path.join(DEFAULT_MODEL_DIR, "best_model.pkl")
+ALL_MODELS_PATH = os.path.join(DEFAULT_MODEL_DIR, "all_models.pkl")
 
 
 def build_models() -> dict:
@@ -38,7 +38,8 @@ def build_models() -> dict:
     }
 
 
-def train_and_evaluate(X_train, X_test, y_train, y_test) -> tuple[dict, str, object]:
+def train_and_evaluate(X_train, X_test, y_train, y_test,
+                       model_dir: str = None) -> tuple[dict, str, object]:
     """
     Train all models, evaluate on the test set, save the best.
 
@@ -48,7 +49,10 @@ def train_and_evaluate(X_train, X_test, y_train, y_test) -> tuple[dict, str, obj
     best_name: str   – name of the best model (highest R²)
     best_model       – fitted estimator of the best model
     """
-    os.makedirs(MODEL_DIR, exist_ok=True)
+    _model_dir      = model_dir if model_dir else DEFAULT_MODEL_DIR
+    _best_model_path = os.path.join(_model_dir, "best_model.pkl")
+    _all_models_path = os.path.join(_model_dir, "all_models.pkl")
+    os.makedirs(_model_dir, exist_ok=True)
     models  = build_models()
     results = {}
 
@@ -84,9 +88,9 @@ def train_and_evaluate(X_train, X_test, y_train, y_test) -> tuple[dict, str, obj
     print("=" * 58)
 
     # ── persist ───────────────────────────────────────────────────────────────
-    joblib.dump(best_model, BEST_MODEL_PATH)
-    joblib.dump(results,    ALL_MODELS_PATH)
-    print(f"[train_models] Best model saved → {BEST_MODEL_PATH}")
+    joblib.dump(best_model, _best_model_path)
+    joblib.dump(results,    _all_models_path)
+    print(f"[train_models] Best model saved → {_best_model_path}")
 
     return results, best_name, best_model
 

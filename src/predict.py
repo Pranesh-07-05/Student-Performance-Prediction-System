@@ -11,9 +11,14 @@ import argparse
 import numpy as np
 import joblib
 
-MODEL_PATH   = os.path.join("models", "best_model.pkl")
-SCALER_PATH  = os.path.join("models", "scaler.pkl")
-IMPUTER_PATH = os.path.join("models", "imputer.pkl")
+# Resolve paths relative to this file's location (i.e., the src/ directory),
+# then go one level up to reach the project root where models/ lives.
+_SRC_DIR   = os.path.dirname(os.path.abspath(__file__))
+_ROOT_DIR  = os.path.dirname(_SRC_DIR)
+
+MODEL_PATH   = os.path.join(_ROOT_DIR, "models", "best_model.pkl")
+SCALER_PATH  = os.path.join(_ROOT_DIR, "models", "scaler.pkl")
+IMPUTER_PATH = os.path.join(_ROOT_DIR, "models", "imputer.pkl")
 
 FEATURE_NAMES = ["attendance_pct", "study_hours", "assignment_score", "previous_marks"]
 

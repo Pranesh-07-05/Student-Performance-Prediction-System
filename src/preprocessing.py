@@ -16,8 +16,9 @@ from sklearn.impute import SimpleImputer
 FEATURE_COLS = ["attendance_pct", "study_hours", "assignment_score", "previous_marks"]
 TARGET_COL   = "final_grade"
 
-SCALER_PATH  = os.path.join("models", "scaler.pkl")
-IMPUTER_PATH = os.path.join("models", "imputer.pkl")
+DEFAULT_MODEL_DIR = "models"
+SCALER_PATH  = os.path.join(DEFAULT_MODEL_DIR, "scaler.pkl")
+IMPUTER_PATH = os.path.join(DEFAULT_MODEL_DIR, "imputer.pkl")
 
 
 def load_and_preprocess(
@@ -25,6 +26,7 @@ def load_and_preprocess(
     test_size: float = 0.20,
     random_state: int = 42,
     save_artifacts: bool = True,
+    model_dir: str = None,
 ):
     """
     Full preprocessing pipeline.
@@ -76,11 +78,14 @@ def load_and_preprocess(
 
     # ── 7. Persist scaler & imputer ───────────────────────────────────────────
     if save_artifacts:
-        os.makedirs("models", exist_ok=True)
-        joblib.dump(scaler,  SCALER_PATH)
-        joblib.dump(imputer, IMPUTER_PATH)
-        print(f"[preprocessing] Scaler  → {SCALER_PATH}")
-        print(f"[preprocessing] Imputer → {IMPUTER_PATH}")
+        _model_dir    = model_dir if model_dir else DEFAULT_MODEL_DIR
+        _scaler_path  = os.path.join(_model_dir, "scaler.pkl")
+        _imputer_path = os.path.join(_model_dir, "imputer.pkl")
+        os.makedirs(_model_dir, exist_ok=True)
+        joblib.dump(scaler,  _scaler_path)
+        joblib.dump(imputer, _imputer_path)
+        print(f"[preprocessing] Scaler  → {_scaler_path}")
+        print(f"[preprocessing] Imputer → {_imputer_path}")
 
     return X_train, X_test, y_train, y_test, FEATURE_COLS, scaler, df_clean
 
