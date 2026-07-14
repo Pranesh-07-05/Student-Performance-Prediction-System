@@ -78,19 +78,36 @@ html, body, .stApp {
 [data-testid="stSidebar"] > div { padding: 0 !important; }
 [data-testid="stSidebar"] * { color: var(--text) !important; }
 
-/* ── Sidebar sliders ── */
-[data-testid="stSlider"] > div > div { padding: 0 !important; }
-[data-testid="stSlider"] label {
-    font-size: 0.78rem !important;
-    font-weight: 600 !important;
+/* ── Sidebar number inputs ── */
+[data-testid="stNumberInput"] > label {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
     color: var(--text-muted) !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.06em !important;
+    letter-spacing: 0.08em !important;
+    margin-bottom: 4px !important;
 }
-/* Hide min/max tick labels below slider track */
-[data-testid="stSliderTickBarMin"],
-[data-testid="stSliderTickBarMax"] {
-    display: none !important;
+[data-testid="stNumberInput"] input {
+    background: var(--card2) !important;
+    border: 1px solid var(--border2) !important;
+    border-radius: 8px !important;
+    color: var(--text) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+}
+[data-testid="stNumberInput"] input:focus {
+    border-color: var(--violet) !important;
+    box-shadow: 0 0 0 2px rgba(124,109,250,0.25) !important;
+}
+[data-testid="stNumberInput"] button {
+    background: var(--card) !important;
+    border-color: var(--border2) !important;
+    color: var(--violet-soft) !important;
+}
+[data-testid="stNumberInput"] button:hover {
+    background: var(--violet) !important;
+    color: #fff !important;
 }
 
 /* ── Tabs ── */
@@ -818,17 +835,26 @@ with st.sidebar:
 
     st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
 
-    attendance = st.slider("Attendance", min_value=40.0, max_value=100.0,
-                           value=85.0, step=0.5, format="%.1f%%")
-
-    study_hrs  = st.slider("Study hrs", min_value=0.5, max_value=10.0,
-                           value=4.0, step=0.5, format="%.1f")
-
-    assign_sc  = st.slider("Assignment", min_value=0.0, max_value=100.0,
-                           value=80.0, step=1.0, format="%.0f")
-
-    prev_marks = st.slider("Prev marks", min_value=20.0, max_value=100.0,
-                           value=75.0, step=1.0, format="%.0f")
+    attendance = st.number_input(
+        "Attendance %",
+        min_value=40.0, max_value=100.0,
+        value=85.0, step=1.0, format="%.1f",
+    )
+    study_hrs = st.number_input(
+        "Study Hours / Day",
+        min_value=0.5, max_value=10.0,
+        value=4.0, step=0.5, format="%.1f",
+    )
+    assign_sc = st.number_input(
+        "Assignment Score",
+        min_value=0.0, max_value=100.0,
+        value=80.0, step=1.0, format="%.0f",
+    )
+    prev_marks = st.number_input(
+        "Previous Marks",
+        min_value=20.0, max_value=100.0,
+        value=75.0, step=1.0, format="%.0f",
+    )
 
     st.markdown("""<div style="height:12px;"></div>""", unsafe_allow_html=True)
 
