@@ -836,14 +836,33 @@ with st.sidebar:
 
     st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
 
-    attendance = st.slider("Attendance %",       min_value=40.0, max_value=100.0,
-                           value=85.0, step=0.5, format="%.1f%%")
-    study_hrs  = st.slider("Study Hours / Day",  min_value=0.5,  max_value=10.0,
-                           value=4.0,  step=0.5, format="%.1f hrs")
-    assign_sc  = st.slider("Assignment Score",   min_value=0.0,  max_value=100.0,
-                           value=80.0, step=1.0,  format="%.0f / 100")
-    prev_marks = st.slider("Previous Marks",     min_value=20.0, max_value=100.0,
-                           value=75.0, step=1.0,  format="%.0f / 100")
+    st.markdown("""<div style='font-size:0.72rem;font-weight:700;color:#7878a8;
+        text-transform:uppercase;letter-spacing:0.08em;
+        margin:14px 0 4px;'>Attendance %</div>""", unsafe_allow_html=True)
+    attendance = st.slider("Attendance %", min_value=40.0, max_value=100.0,
+                           value=85.0, step=0.5, format="%.1f%%",
+                           label_visibility="collapsed")
+
+    st.markdown("""<div style='font-size:0.72rem;font-weight:700;color:#7878a8;
+        text-transform:uppercase;letter-spacing:0.08em;
+        margin:14px 0 4px;'>Study Hours / Day</div>""", unsafe_allow_html=True)
+    study_hrs  = st.slider("Study Hours / Day", min_value=0.5, max_value=10.0,
+                           value=4.0, step=0.5, format="%.1f hrs",
+                           label_visibility="collapsed")
+
+    st.markdown("""<div style='font-size:0.72rem;font-weight:700;color:#7878a8;
+        text-transform:uppercase;letter-spacing:0.08em;
+        margin:14px 0 4px;'>Assignment Score</div>""", unsafe_allow_html=True)
+    assign_sc  = st.slider("Assignment Score", min_value=0.0, max_value=100.0,
+                           value=80.0, step=1.0, format="%.0f / 100",
+                           label_visibility="collapsed")
+
+    st.markdown("""<div style='font-size:0.72rem;font-weight:700;color:#7878a8;
+        text-transform:uppercase;letter-spacing:0.08em;
+        margin:14px 0 4px;'>Previous Marks</div>""", unsafe_allow_html=True)
+    prev_marks = st.slider("Previous Marks", min_value=20.0, max_value=100.0,
+                           value=75.0, step=1.0, format="%.0f / 100",
+                           label_visibility="collapsed")
 
     st.markdown("""<div style="height:12px;"></div>""", unsafe_allow_html=True)
 
