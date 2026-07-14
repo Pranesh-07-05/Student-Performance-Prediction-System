@@ -78,27 +78,37 @@ html, body, .stApp {
 [data-testid="stSidebar"] > div { padding: 0 !important; }
 [data-testid="stSidebar"] * { color: var(--text) !important; }
 
-/* ── Sidebar inner padding for widget blocks ── */
-[data-testid="stSidebar"] [data-testid="stVerticalBlock"] > div {
+/* ── Sidebar sliders — give them room so label+value don't collide ── */
+[data-testid="stSidebar"] [data-testid="stSlider"] {
+    margin-top: 2px !important;
+    margin-bottom: 12px !important;
     padding-left: 18px !important;
     padding-right: 18px !important;
 }
 
-/* ── Sidebar sliders — extra top space so they don't crowd heading ── */
-[data-testid="stSidebar"] [data-testid="stSlider"] {
-    margin-top: 4px !important;
-    margin-bottom: 10px !important;
+/* Stack label text and value on separate lines — prevents overlap */
+[data-testid="stSidebar"] [data-testid="stSlider"] label {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+[data-testid="stSidebar"] [data-testid="stSlider"] label > div {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    width: 100% !important;
 }
 
 /* ── Sidebar sliders ── */
 [data-testid="stSlider"] > div > div { padding: 0 !important; }
 [data-testid="stSlider"] label {
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
+    font-size: 0.80rem !important;
+    font-weight: 600 !important;
     color: var(--text-muted) !important;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 2px !important;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px !important;
+    line-height: 1.6 !important;
 }
 
 /* ── Tabs ── */
@@ -826,13 +836,13 @@ with st.sidebar:
 
     st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
 
-    attendance = st.slider("Attendance Percentage", min_value=40.0, max_value=100.0,
+    attendance = st.slider("Attendance %",       min_value=40.0, max_value=100.0,
                            value=85.0, step=0.5, format="%.1f%%")
-    study_hrs  = st.slider("Study Hours Per Day",   min_value=0.5,  max_value=10.0,
+    study_hrs  = st.slider("Study Hours / Day",  min_value=0.5,  max_value=10.0,
                            value=4.0,  step=0.5, format="%.1f hrs")
-    assign_sc  = st.slider("Assignment Score",       min_value=0.0,  max_value=100.0,
+    assign_sc  = st.slider("Assignment Score",   min_value=0.0,  max_value=100.0,
                            value=80.0, step=1.0,  format="%.0f / 100")
-    prev_marks = st.slider("Previous Semester Marks",min_value=20.0, max_value=100.0,
+    prev_marks = st.slider("Previous Marks",     min_value=20.0, max_value=100.0,
                            value=75.0, step=1.0,  format="%.0f / 100")
 
     st.markdown("""<div style="height:12px;"></div>""", unsafe_allow_html=True)
