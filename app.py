@@ -854,14 +854,14 @@ with st.sidebar:
         text-transform:uppercase;letter-spacing:0.08em;
         margin:14px 0 4px;'>Assignment Score</div>""", unsafe_allow_html=True)
     assign_sc  = st.slider("Assignment Score", min_value=0.0, max_value=100.0,
-                           value=80.0, step=1.0, format="%.0f / 100",
+                           value=80.0, step=1.0, format="%.0f",
                            label_visibility="collapsed")
 
     st.markdown("""<div style='font-size:0.72rem;font-weight:700;color:#7878a8;
         text-transform:uppercase;letter-spacing:0.08em;
         margin:14px 0 4px;'>Previous Marks</div>""", unsafe_allow_html=True)
     prev_marks = st.slider("Previous Marks", min_value=20.0, max_value=100.0,
-                           value=75.0, step=1.0, format="%.0f / 100",
+                           value=75.0, step=1.0, format="%.0f",
                            label_visibility="collapsed")
 
     st.markdown("""<div style="height:12px;"></div>""", unsafe_allow_html=True)
