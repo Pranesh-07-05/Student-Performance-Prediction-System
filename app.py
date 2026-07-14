@@ -78,10 +78,28 @@ html, body, .stApp {
 [data-testid="stSidebar"] > div { padding: 0 !important; }
 [data-testid="stSidebar"] * { color: var(--text) !important; }
 
+/* ── Sidebar inner padding for widget blocks ── */
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] > div {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+
+/* ── Sidebar sliders — extra top space so they don't crowd heading ── */
+[data-testid="stSidebar"] [data-testid="stSlider"] {
+    margin-top: 4px !important;
+    margin-bottom: 10px !important;
+}
+
 /* ── Sidebar sliders ── */
 [data-testid="stSlider"] > div > div { padding: 0 !important; }
-[data-testid="stSlider"] label { font-size: 0.82rem !important; font-weight: 500 !important;
-    color: var(--text-muted) !important; text-transform: uppercase; letter-spacing: 0.06em; }
+[data-testid="stSlider"] label {
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    color: var(--text-muted) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px !important;
+}
 
 /* ── Tabs ── */
 [data-testid="stTabs"] [role="tablist"] {
@@ -798,10 +816,15 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="sb-section">
-        <div class="sb-title">Input Parameters</div>
+    <div style="padding: 20px 18px 4px 18px; border-bottom: 1px solid #252545;">
+        <div style="font-size:0.65rem; font-weight:800; letter-spacing:0.18em;
+                    text-transform:uppercase; color:#9d92fb; margin-bottom:14px;">
+            Input Parameters
+        </div>
     </div>
     """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
 
     attendance = st.slider("Attendance Percentage", min_value=40.0, max_value=100.0,
                            value=85.0, step=0.5, format="%.1f%%")
